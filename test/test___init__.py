@@ -4,10 +4,11 @@ import sounddevice as sd
 import time
 
 """
+conda install "ffmpeg"
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
 pip install -e .[cu128]
-pip install sounddevice
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128 --force-reinstall
 pip install torchcodec
+pip install sounddevice
 """
 
 
