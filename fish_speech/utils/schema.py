@@ -77,6 +77,13 @@ class ServeReferenceAudio(BaseModel):
     def __repr__(self) -> str:
         return f"ServeReferenceAudio(text={self.text!r}, audio_size={len(self.audio)})"
 
+class Reference(BaseModel):
+    tokens: torch.Tensor
+    text: str
+
+    # Allow arbitrary types for pytorch related types
+    class Config:
+        arbitrary_types_allowed = True
 
 class ServeTTSRequest(BaseModel):
     text: str
@@ -85,6 +92,7 @@ class ServeTTSRequest(BaseModel):
     format: Literal["wav", "pcm", "mp3"] = "wav"
     # References audios for in-context learning
     references: list[ServeReferenceAudio] = []
+    preprocessed_references: list[Reference] = []
     # Reference id
     # For example, if you want use https://fish.audio/m/7f92f8afb8ec43bf81429cc1c9199cb1/
     # Just pass 7f92f8afb8ec43bf81429cc1c9199cb1

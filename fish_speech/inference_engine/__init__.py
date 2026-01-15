@@ -56,6 +56,10 @@ class TTSInferenceEngine(ReferenceLoader, VQManager):
                 req.references, req.use_memory_cache
             )
 
+        elif req.preprocessed_references:
+            prompt_tokens = [ref.tokens for ref in req.preprocessed_references]
+            prompt_texts = [ref.text for ref in req.preprocessed_references]
+
         # Set the random seed if provided
         if req.seed is not None:
             set_seed(req.seed)
