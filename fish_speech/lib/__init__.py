@@ -8,6 +8,7 @@ import torch
 from fish_speech.inference_engine import TTSInferenceEngine
 from fish_speech.models.text2semantic.inference import launch_thread_safe_queue
 from fish_speech.models.dac.inference import load_model as load_vqgan_model
+from fish_speech.models.dac.modded_dac import DAC
 from fish_speech.utils.file import audio_to_bytes
 from fish_speech.utils.schema import Reference, ServeTTSRequest
 
@@ -51,7 +52,6 @@ class Pipeline:
 
         llama = self.load_llama(llama_path, device, precision, compile)
         vqgan = self.load_vqgan(vqgan_config, vqgan_path, device)
-        print(f"1111111: {type(vqgan)}")
 
         self.inference_engine = TTSInferenceEngine(
             llama_queue=llama,
@@ -99,7 +99,7 @@ class Pipeline:
 
     def load_vqgan(
             self, vqgan_config: str, vqgan_path: str, device: str
-    ):
+    ) -> DAC:
         """Load the VQ-GAN model."""
         try:
             return load_vqgan_model(
