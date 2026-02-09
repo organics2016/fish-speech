@@ -2,6 +2,7 @@ from unittest import TestCase
 from fish_speech.lib import Pipeline
 import sounddevice as sd
 import time
+import numpy as np
 
 """
 conda install "ffmpeg"
@@ -42,3 +43,22 @@ class TestPipeline(TestCase):
                                  channels=audio.ndim,  # if data.shape[1] != channels:
                                  dtype=audio.dtype) as stream:
                 stream.write(audio)
+
+    def test_streaming(self):
+        for i in range(1):
+            t0 = time.time()
+            generator = self.tts_model.generate('Ori是我的一个好朋友，我第一次听到Ori这个名字，你觉的这个名字怎么样？',
+                                                self.ref_audio, seed=111, chunk_length=20,
+                                                num_samples=10,
+                                                streaming=True)
+            print(f'speak generator time:{(time.time() - t0):.02f}')
+
+            with sd.OutputStream(samplerate=self.tts_model.sample_rate,
+                                 blocksize=4096,
+                                 device=3,
+                                 channels=1,  # if data.shape[1] != channels:
+                                 dtype=np.float32) as stream:
+
+                for part in generator:
+                    print("part:ffffff")
+                    stream.write(part)
