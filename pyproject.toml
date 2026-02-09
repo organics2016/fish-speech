@@ -50,23 +50,23 @@ dependencies = [
 [project.optional-dependencies]
 stable = [
     "torch<2.9.0",
-    "torchaudio",
+    "torchaudio==2.8.0",
 ]
 cpu = [
   "torch>=2.5.1",
-  "torchaudio",
+  "torchaudio==2.8.0",
 ]
 cu126 = [
   "torch>=2.5.1",
-  "torchaudio",
+  "torchaudio==2.8.0",
 ]
 cu128 = [
   "torch>=2.5.1",
-  "torchaudio",
+  "torchaudio==2.8.0",
 ]
 cu129 = [
   "torch>=2.5.1",
-  "torchaudio",
+  "torchaudio==2.8.0",
 ]
 
 [tool.uv]
